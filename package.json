@@ -1,0 +1,19 @@
+{
+  "name": "imovies",
+  "version": "1.0.0",
+  "description": "IMovies – Premium Online Movie Ticket Booking Platform",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "start": "node server/server.js",
+    "seed": "npm run seed --prefix server",
+    "build": "npm run build --prefix client"
+  },
+  "keywords": ["movie-booking", "mern", "react", "express", "mongodb"],
+  "author": "IMovies Team",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
