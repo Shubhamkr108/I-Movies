@@ -80,20 +80,23 @@ app.use((err, req, res, next) => {
 // Database connection and server start
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`🚀 IMovies server running on port ${PORT}`);
-  console.log(`📡 Environment: ${process.env.NODE_ENV || 'development'}`);
-});
-
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/imovies', {
-  serverSelectionTimeoutMS: 5000
-})
-  .then(() => {
+const startServer = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/imovies', {
+      serverSelectionTimeoutMS: 5000
+    });
     console.log('✅ MongoDB connected successfully');
-  })
-  .catch((err) => {
-    console.warn('⚠️  MongoDB connection warning:', err.message);
-    console.warn('👉 Please ensure MongoDB is running locally or provide a valid MONGODB_URI in server/.env');
-  });
+
+    app.listen(PORT, () => {
+      console.log(`🚀 IMovies server running on port ${PORT}`);
+      console.log(`📡 Environment: ${process.env.NODE_ENV || 'development'}`);
+    });
+  } catch (err) {
+    console.error('MongoDB connection failed:', err.message);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 module.exports = app;
